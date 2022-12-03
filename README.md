@@ -1,7 +1,9 @@
-# Customers Invoices Web App
+# Customers Managment and Invoices Web App
 
 This .net core web api &amp; angular 
-Database My sql
+
+<br />
+Database Mysql
 
 
 <br />
@@ -29,7 +31,6 @@ Database My sql
   <li>Run the command <b><i>'npm install'</b></i> in a command prompt</li>
   <li>Make sure that all NuGet packages are installed with <b><i>'dotnet restore'</b></i>.</li>
   <li>Run the SQL script in <b><i>'docs/sql/invoice_app.sql'</b></i></li>
-  <li>Change the database connection details as described earlier.</li>
   <li>In two seperate command prompts, run the following commands, in this order:
     <ul>
       <li><b><i>ng build</b></i></li>
@@ -52,3 +53,10 @@ Database My sql
     <b><i>class inovice{}</b></i>.
   </li>
 </ul>
+
+<br/>
+<hr>
+<p>Website:<a href="http://elsamani.rf.gd">Mohamed O.Elsamani</a></p>
+<p>Phone  :   +249 99 023 3204</p>
+<p>Email  :   elsamaniomer@gmail.com</p>
+<hr/>
