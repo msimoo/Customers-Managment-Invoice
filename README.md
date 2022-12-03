@@ -38,8 +38,6 @@ Database Mysql
     </ul>
   </li>
 </ul>
-<small>*this project makes use of .NET Core SDK 2.2</small>
-
 <br /><br />
 
 # Notice:
