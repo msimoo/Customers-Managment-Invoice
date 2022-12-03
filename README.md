@@ -42,8 +42,8 @@ Database Mysql
 
 # Notice:
 <ul>
+  <li>•••Please••• rename the 'srcc' file to 'src' in the root [DIR] cuz I have faced problem on uploading the file.</li>
   <li>Make sure you have initialized the database file in the 'docs/sql/invoice_app.sql'</li>
-  
   <li>This App is an assignment for your request</li>
 
   <li>I have added more entites for completed life cycle on:
