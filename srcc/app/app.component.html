@@ -1,0 +1,107 @@
+<!-- Header -->
+<nav class="navbar navbar-expand-lg fixed-top navbar-dark">
+    <div class="logo">
+        <h1 *ngIf="!settings?.show_logo" class="navbar-brand">{{ settings.company_name }}</h1>
+        <img *ngIf="settings?.show_logo" class="navbar-logo" [src]="_sanitizer.bypassSecurityTrustUrl(settings?.logo)" />
+    </div>
+
+    <!-- Mobile menu toggle-->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navBar" aria-controls="navBar"
+        aria-expanded="false" aria-label="Toggle navigation" *ngIf="isSignedIn && currentUser != null">
+        <i class="fa fa-navicon"></i>
+    </button>
+
+    <!-- Mobile menu -->
+    <div id="navBar" class="collapse navbar-collapse" *ngIf="isSignedIn && currentUser != null">
+        <ul class="navbar-nav mr-auto d-md-flex d-lg-none" id="mobileMenu">
+            <li class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
+                <a [routerLink]="['/']" class="nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
+            </li>
+            <li class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show" [hidden]="currentUser.role_id == 2">
+                <a [routerLink]="['/customers']" class="nav-link" routerLinkActive="active">Customer</a>
+            </li>
+            <li class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
+                <a [routerLink]="['/invoices']" class="nav-link" routerLinkActive="active">Invoices</a>
+            </li>
+            <li class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
+                <a [routerLink]="['/users']" class="nav-link" routerLinkActive="active">Users</a>
+            </li>
+            <li class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
+                <a [routerLink]="['/settings']" class="nav-link settings" routerLinkActive="active">Settings</a>
+            </li>
+            <li class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
+                <a class="nav-link sign-out" style="cursor: pointer;" (click)="signOut()" title="Sign Out">
+                    Sign Out
+                </a>
+            </li>
+        </ul>
+
+        <!-- Profile and sign out -->
+        <ul class="navbar-nav justify-content-end d-none d-lg-flex" *ngIf="isSignedIn && currentUser != null">
+            <li class="nav-item" routerLinkActive="active">
+                <a [routerLink]="['/users/edit', currentUser.email]" class="nav-link" href="#" title="{{currentUser.first_name}} {{currentUser.last_name}}">
+                    <img class="profile" [src]="_sanitizer.bypassSecurityTrustUrl(currentUser.picture)" />
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link sign-out" style="cursor: pointer;" (click)="signOut()" title="Sign Out">
+                    <i class="fa fa-sign-out" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<!-- Sidebar -->
+<nav class="sidebar bg-faded d-none d-lg-block" *ngIf="isSignedIn && currentUser != null">
+    <ul class="nav nav-pills flex-column">
+        <li class="nav-item">
+            <a [routerLink]="['/']" class="nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                <i class="fa fa-home mr-2" aria-hidden="true"></i>
+                <span>Home</span>
+            </a>
+        </li>
+        <li class="nav-item" [hidden]="currentUser.role_id == 2">
+            <a [routerLink]="['/customers']" class="nav-link" routerLinkActive="active">
+                <i class="fa fa-address-book mr-2" aria-hidden="true"></i>
+                <span>Customer</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a [routerLink]="['/invoices']" class="nav-link" routerLinkActive="active">
+                <i class="fa fa-file-text mr-2" aria-hidden="true"></i>
+                <span>Invoices</span>
+            </a>
+        </li>
+        <li class="nav-item" [hidden]="currentUser.role_id == 2">
+            <a [routerLink]="['/users']" class="nav-link" routerLinkActive="active">
+                <i class="fa fa-users mr-2" aria-hidden="true"></i>
+                <span>Users</span>
+            </a>
+        </li>
+        <li class="nav-item bottom">
+            <a href="http//elsamani.rf.gd" class="nav-link" routerLinkActive="active">
+                <i class="fa fa-cog mr-2" aria-hidden="true"></i>
+                <span>Developed By Mohamed Elsamnai</span>
+            </a>
+        </li>
+        <li class="nav-item bottom" [hidden]="currentUser.role_id == 2" *ngIf="isSignedIn && currentUser != null">
+            <a [routerLink]="['/settings']" class="nav-link" routerLinkActive="active">
+                <i class="fa fa-cog mr-2" aria-hidden="true"></i>
+                <span>Settings</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+
+<main [className]="isSignedIn ? '' : 'full-width'">
+    <div class="page-title" [hidden]="title === ' '" [className]="isSignedIn ? 'page-title' : 'page-title full'">{{title}}</div>
+    <div class="router" [className]="title === ' ' ? 'router' : 'router-title'">
+        <router-outlet (activate)="checkIfLoggedIn()"></router-outlet>
+    </div>
+    <ng2-toasty [position]="'bottom-right'"></ng2-toasty>
+</main>
+
+<ngx-spinner bdColor="rgba(245,245,245,0.8)" size="large" color="#1e90ff" type="ball-clip-rotate">
+    <p style="font-size: 20px; color: rgb(49, 49, 49)">Loading... Please wait</p>
+</ngx-spinner>
